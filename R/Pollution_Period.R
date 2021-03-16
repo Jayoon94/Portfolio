@@ -178,271 +178,271 @@ year16 <- "https://www.dropbox.com/s/3lvsj2qv871c2h9/2016.csv?dl=1"
   names(pol16_seoul)[12:17] <- c("fine_dust","micro_dust","ozone","nitro_dioxide","carbon_monoxide","sulfurous_acid_gas")
 
 
-  ## 행정 구역 이름을 지도에 넣기 위한 작업
-  cnames <- aggregate(cbind(long,lat) ~ 지역.x, data=pol10_seoul, FUN=function(x) mean(range(x)))
+ ## 행정 구역 이름을 지도에 넣기 위한 작업
+ cnames <- aggregate(cbind(long,lat) ~ 지역.x, data=pol10_seoul, FUN=function(x) mean(range(x)))
 
 
-	## 오염물질별 지도 시각화 작업
-	  if (pollution1 == "미세먼지") {
-		fine_dust <- "미세먼지"
-		fine_dust0 <- pol10_seoul$fine_dust
-		fine_dust1 <- pol11_seoul$fine_dust
-		fine_dust2 <- pol12_seoul$fine_dust
-		fine_dust3 <- pol13_seoul$fine_dust
-		fine_dust4 <- pol13_seoul$fine_dust
-		fine_dust5 <- pol14_seoul$fine_dust
-		fine_dust6 <- pol15_seoul$fine_dust
+ ## 오염물질별 지도 시각화 작업
+ if (pollution1 == "미세먼지") {
+	fine_dust <- "미세먼지"
+	fine_dust0 <- pol10_seoul$fine_dust
+	fine_dust1 <- pol11_seoul$fine_dust
+	fine_dust2 <- pol12_seoul$fine_dust
+	fine_dust3 <- pol13_seoul$fine_dust
+	fine_dust4 <- pol13_seoul$fine_dust
+	fine_dust5 <- pol14_seoul$fine_dust
+	fine_dust6 <- pol15_seoul$fine_dust
 
 
-		p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=fine_dust0))+theme_void()
-		p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=fine_dust1))+theme_void()
-		p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=fine_dust2))+theme_void()
-		p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=fine_dust3))+theme_void()
-		p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=fine_dust4))+theme_void()
-		p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=fine_dust5))+theme_void()
-		p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=fine_dust6))+theme_void()
+	p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=fine_dust0))+theme_void()
+	p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=fine_dust1))+theme_void()
+	p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=fine_dust2))+theme_void()
+	p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=fine_dust3))+theme_void()
+	p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=fine_dust4))+theme_void()
+	p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=fine_dust5))+theme_void()
+	p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=fine_dust6))+theme_void()
 
-		s <- scale_fill_distiller(name="PM-10\n단위(㎍/㎥)", palette="Reds", breaks = pretty_breaks(n=5),direction = 1) 
-		g <- guides(fill = guide_legend(reverse = T))
+	s <- scale_fill_distiller(name="PM-10\n단위(㎍/㎥)", palette="Reds", breaks = pretty_breaks(n=5),direction = 1) 
+	g <- guides(fill = guide_legend(reverse = T))
 
-		g2.0 <- ggtitle('미세먼지 2010년') 
-		g2.1 <- ggtitle('2011년') 
-		g2.2 <- ggtitle('2012년') 
-		g2.3 <- ggtitle('2013년') 
-		g2.4 <- ggtitle('2014년') 
-		g2.5 <- ggtitle('2015년') 
-		g2.6 <- ggtitle('2016년') 
+	g2.0 <- ggtitle('미세먼지 2010년') 
+	g2.1 <- ggtitle('2011년') 
+	g2.2 <- ggtitle('2012년') 
+	g2.3 <- ggtitle('2013년') 
+	g2.4 <- ggtitle('2014년') 
+	g2.5 <- ggtitle('2015년') 
+	g2.6 <- ggtitle('2016년') 
 
-		t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
-		t2 <- theme(panel.spacing=unit(1,"lines"))
-		g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
+	t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
+	t2 <- theme(panel.spacing=unit(1,"lines"))
+	g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
 
-		 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
-		 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
-		 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
-		 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
-		 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
-		 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
-		 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
+	 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
+	 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
+	 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
+	 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
+	 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
+	 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
+	 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
 
-		 }
+	 }
 
-	  else if (pollution1 == "초미세먼지") {
-		micro_dust<- "초미세먼지"
-		micro_dust0 <- pol10_seoul$micro_dust
-		micro_dust1 <- pol11_seoul$micro_dust
-		micro_dust2 <- pol12_seoul$micro_dust
-		micro_dust3 <- pol13_seoul$micro_dust
-		micro_dust4 <- pol14_seoul$micro_dust
-		micro_dust5 <- pol15_seoul$micro_dust
-		micro_dust6 <- pol16_seoul$micro_dust
-
-
-		p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=micro_dust0))+theme_void()
-		p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=micro_dust1))+theme_void()
-		p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=micro_dust2))+theme_void()
-		p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=micro_dust3))+theme_void()
-		p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=micro_dust4))+theme_void()
-		p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=micro_dust5))+theme_void()
-		p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=micro_dust6))+theme_void()
+ else if (pollution1 == "초미세먼지") {
+	micro_dust<- "초미세먼지"
+	micro_dust0 <- pol10_seoul$micro_dust
+	micro_dust1 <- pol11_seoul$micro_dust
+	micro_dust2 <- pol12_seoul$micro_dust
+	micro_dust3 <- pol13_seoul$micro_dust
+	micro_dust4 <- pol14_seoul$micro_dust
+	micro_dust5 <- pol15_seoul$micro_dust
+	micro_dust6 <- pol16_seoul$micro_dust
 
 
-		s <- scale_fill_distiller(name="PM-25\n단위(㎍/㎥)", palette="YlOrRd", breaks = pretty_breaks(n=5),direction = 1) 
-		g <- guides(fill = guide_legend(reverse = T))
-
-		g2.0 <- ggtitle('초미세먼지 2010년') 
-		g2.1 <- ggtitle('2011년') 
-		g2.2 <- ggtitle('2012년') 
-		g2.3 <- ggtitle('2013년') 
-		g2.4 <- ggtitle('2014년') 
-		g2.5 <- ggtitle('2015년') 
-		g2.6 <- ggtitle('2016년') 
-
-		t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
-		t2 <- theme(panel.spacing=unit(1,"lines"))
-		g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
-
-		 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
-		 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
-		 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
-		 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
-		 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
-		 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
-		 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
-	  }
-
-	  else if (pollution1 == "오존") {
-		ozone <- "오존"
-		ozone0 <- pol10_seoul$ozone
-		ozone1 <- pol11_seoul$ozone
-		ozone2 <- pol12_seoul$ozone
-		ozone3 <- pol13_seoul$ozone
-		ozone4 <- pol14_seoul$ozone
-		ozone5 <- pol15_seoul$ozone
-		ozone6 <- pol16_seoul$ozone
+	p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=micro_dust0))+theme_void()
+	p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=micro_dust1))+theme_void()
+	p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=micro_dust2))+theme_void()
+	p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=micro_dust3))+theme_void()
+	p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=micro_dust4))+theme_void()
+	p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=micro_dust5))+theme_void()
+	p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=micro_dust6))+theme_void()
 
 
-		p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=ozone0))+theme_void()
-		p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=ozone1))+theme_void()
-		p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=ozone2))+theme_void()
-		p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=ozone3))+theme_void()
-		p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=ozone4))+theme_void()
-		p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=ozone5))+theme_void()
-		p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=ozone6))+theme_void()
+	s <- scale_fill_distiller(name="PM-25\n단위(㎍/㎥)", palette="YlOrRd", breaks = pretty_breaks(n=5),direction = 1) 
+	g <- guides(fill = guide_legend(reverse = T))
 
-		s <- scale_fill_distiller(name="03\n단위(ppm)", palette="PuBuGn", breaks = pretty_breaks(n=5),direction = 1) 
-		g <- guides(fill = guide_legend(reverse = T))
+	g2.0 <- ggtitle('초미세먼지 2010년') 
+	g2.1 <- ggtitle('2011년') 
+	g2.2 <- ggtitle('2012년') 
+	g2.3 <- ggtitle('2013년') 
+	g2.4 <- ggtitle('2014년') 
+	g2.5 <- ggtitle('2015년') 
+	g2.6 <- ggtitle('2016년') 
 
-		g2.0 <- ggtitle('오존 2010년') 
-		g2.1 <- ggtitle('2011년') 
-		g2.2 <- ggtitle('2012년') 
-		g2.3 <- ggtitle('2013년') 
-		g2.4 <- ggtitle('2014년') 
-		g2.5 <- ggtitle('2015년') 
-		g2.6 <- ggtitle('2016년') 
+	t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
+	t2 <- theme(panel.spacing=unit(1,"lines"))
+	g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
 
-		t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
-		t2 <- theme(panel.spacing=unit(1,"lines"))
-		g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
+	 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
+	 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
+	 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
+	 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
+	 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
+	 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
+	 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
+  }
 
-		 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
-		 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
-		 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
-		 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
-		 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
-		 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
-		 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
-	  }
-
-	  else if (pollution1 == "이산화질소") {
-		nitro_dioxide <- "이산화질소"
-		nitro_dioxide0 <- pol10_seoul$nitro_dioxide
-		nitro_dioxide1 <- pol11_seoul$nitro_dioxide
-		nitro_dioxide2 <- pol12_seoul$nitro_dioxide
-		nitro_dioxide3 <- pol13_seoul$nitro_dioxide
-		nitro_dioxide4 <- pol14_seoul$nitro_dioxide
-		nitro_dioxide5 <- pol15_seoul$nitro_dioxide
-		nitro_dioxide6 <- pol16_seoul$nitro_dioxide
+ else if (pollution1 == "오존") {
+	ozone <- "오존"
+	ozone0 <- pol10_seoul$ozone
+	ozone1 <- pol11_seoul$ozone
+	ozone2 <- pol12_seoul$ozone
+	ozone3 <- pol13_seoul$ozone
+	ozone4 <- pol14_seoul$ozone
+	ozone5 <- pol15_seoul$ozone
+	ozone6 <- pol16_seoul$ozone
 
 
-		p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide0))+theme_void()
-		p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide1))+theme_void()
-		p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide2))+theme_void()
-		p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide3))+theme_void()
-		p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide4))+theme_void()
-		p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide5))+theme_void()
-		p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide6))+theme_void()
+	p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=ozone0))+theme_void()
+	p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=ozone1))+theme_void()
+	p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=ozone2))+theme_void()
+	p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=ozone3))+theme_void()
+	p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=ozone4))+theme_void()
+	p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=ozone5))+theme_void()
+	p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=ozone6))+theme_void()
 
-		s <- scale_fill_distiller(name="NO2\n단위(ppm)", palette="BuPu", breaks = pretty_breaks(n=5),direction = 1) 
-		g <- guides(fill = guide_legend(reverse = T))
+	s <- scale_fill_distiller(name="03\n단위(ppm)", palette="PuBuGn", breaks = pretty_breaks(n=5),direction = 1) 
+	g <- guides(fill = guide_legend(reverse = T))
 
-		g2.0 <- ggtitle('이산화질소 2010년') 
-		g2.1 <- ggtitle('2011년') 
-		g2.2 <- ggtitle('2012년') 
-		g2.3 <- ggtitle('2013년') 
-		g2.4 <- ggtitle('2014년') 
-		g2.5 <- ggtitle('2015년') 
-		g2.6 <- ggtitle('2016년') 
+	g2.0 <- ggtitle('오존 2010년') 
+	g2.1 <- ggtitle('2011년') 
+	g2.2 <- ggtitle('2012년') 
+	g2.3 <- ggtitle('2013년') 
+	g2.4 <- ggtitle('2014년') 
+	g2.5 <- ggtitle('2015년') 
+	g2.6 <- ggtitle('2016년') 
 
-		t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
-		t2 <- theme(panel.spacing=unit(1,"lines"))
-		g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
+	t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
+	t2 <- theme(panel.spacing=unit(1,"lines"))
+	g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
 
-		 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
-		 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
-		 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
-		 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
-		 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
-		 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
-		 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
-	  }
+	 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
+	 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
+	 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
+	 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
+	 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
+	 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
+	 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
+  }
 
-	  else if (pollution1 == "일산화탄소") {
-		carbon_monoxide <- "일산화탄소"
-		carbon_monoxide0 <- pol10_seoul$carbon_monoxide
-		carbon_monoxide1 <- pol11_seoul$carbon_monoxide
-		carbon_monoxide2 <- pol12_seoul$carbon_monoxide
-		carbon_monoxide3 <- pol13_seoul$carbon_monoxide
-		carbon_monoxide4 <- pol14_seoul$carbon_monoxide
-		carbon_monoxide5 <- pol15_seoul$carbon_monoxide
-		carbon_monoxide6 <- pol16_seoul$carbon_monoxide
-
-
-		p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide0))+theme_void()
-		p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide1))+theme_void()
-		p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide2))+theme_void()
-		p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide3))+theme_void()
-		p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide4))+theme_void()
-		p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide5))+theme_void()
-		p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide6))+theme_void()
+ else if (pollution1 == "이산화질소") {
+	nitro_dioxide <- "이산화질소"
+	nitro_dioxide0 <- pol10_seoul$nitro_dioxide
+	nitro_dioxide1 <- pol11_seoul$nitro_dioxide
+	nitro_dioxide2 <- pol12_seoul$nitro_dioxide
+	nitro_dioxide3 <- pol13_seoul$nitro_dioxide
+	nitro_dioxide4 <- pol14_seoul$nitro_dioxide
+	nitro_dioxide5 <- pol15_seoul$nitro_dioxide
+	nitro_dioxide6 <- pol16_seoul$nitro_dioxide
 
 
-		s <- scale_fill_distiller(name="CO\n단위(ppm)", palette="YlGnBu", breaks = pretty_breaks(n=5),direction = 1) 
-		g <- guides(fill = guide_legend(reverse = T))
+	p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide0))+theme_void()
+	p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide1))+theme_void()
+	p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide2))+theme_void()
+	p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide3))+theme_void()
+	p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide4))+theme_void()
+	p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide5))+theme_void()
+	p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=nitro_dioxide6))+theme_void()
 
-		g2.0 <- ggtitle('일산화탄소 2010년') 
-		g2.1 <- ggtitle('2011년') 
-		g2.2 <- ggtitle('2012년') 
-		g2.3 <- ggtitle('2013년') 
-		g2.4 <- ggtitle('2014년') 
-		g2.5 <- ggtitle('2015년') 
-		g2.6 <- ggtitle('2016년') 
+	s <- scale_fill_distiller(name="NO2\n단위(ppm)", palette="BuPu", breaks = pretty_breaks(n=5),direction = 1) 
+	g <- guides(fill = guide_legend(reverse = T))
 
-		t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
-		t2 <- theme(panel.spacing=unit(1,"lines"))
-		g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
+	g2.0 <- ggtitle('이산화질소 2010년') 
+	g2.1 <- ggtitle('2011년') 
+	g2.2 <- ggtitle('2012년') 
+	g2.3 <- ggtitle('2013년') 
+	g2.4 <- ggtitle('2014년') 
+	g2.5 <- ggtitle('2015년') 
+	g2.6 <- ggtitle('2016년') 
 
-		 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
-		 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
-		 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
-		 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
-		 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
-		 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
-		 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
-	  }
+	t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
+	t2 <- theme(panel.spacing=unit(1,"lines"))
+	g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
 
-	  else if (pollution1 == "아황산가스") {
-		sulfurous_acid_gas <- "아황산가스"
-		sulfurous_acid_gas0 <- pol10_seoul$sulfurous_acid_gas
-		sulfurous_acid_gas1 <- pol11_seoul$sulfurous_acid_gas
-		sulfurous_acid_gas2 <- pol12_seoul$sulfurous_acid_gas
-		sulfurous_acid_gas3 <- pol13_seoul$sulfurous_acid_gas
-		sulfurous_acid_gas4 <- pol14_seoul$sulfurous_acid_gas
-		sulfurous_acid_gas5 <- pol15_seoul$sulfurous_acid_gas
-		sulfurous_acid_gas6 <- pol16_seoul$sulfurous_acid_gas
+	 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
+	 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
+	 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
+	 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
+	 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
+	 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
+	 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
+  }
+
+ else if (pollution1 == "일산화탄소") {
+	carbon_monoxide <- "일산화탄소"
+	carbon_monoxide0 <- pol10_seoul$carbon_monoxide
+	carbon_monoxide1 <- pol11_seoul$carbon_monoxide
+	carbon_monoxide2 <- pol12_seoul$carbon_monoxide
+	carbon_monoxide3 <- pol13_seoul$carbon_monoxide
+	carbon_monoxide4 <- pol14_seoul$carbon_monoxide
+	carbon_monoxide5 <- pol15_seoul$carbon_monoxide
+	carbon_monoxide6 <- pol16_seoul$carbon_monoxide
 
 
-		p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas0))+theme_void()
-		p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas1))+theme_void()
-		p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas2))+theme_void()
-		p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas3))+theme_void()
-		p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas4))+theme_void()
-		p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas5))+theme_void()
-		p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas6))+theme_void()
+	p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide0))+theme_void()
+	p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide1))+theme_void()
+	p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide2))+theme_void()
+	p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide3))+theme_void()
+	p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide4))+theme_void()
+	p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide5))+theme_void()
+	p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=carbon_monoxide6))+theme_void()
 
-		s <- scale_fill_distiller(name="SO2\n단위(ppm)", palette="YlOrBr", breaks = pretty_breaks(n=5),direction = 1) 
-		g <- guides(fill = guide_legend(reverse = T))
 
-		g2.0 <- ggtitle('아황산가스 2010년') 
-		g2.1 <- ggtitle('2011년') 
-		g2.2 <- ggtitle('2012년') 
-		g2.3 <- ggtitle('2013년') 
-		g2.4 <- ggtitle('2014년') 
-		g2.5 <- ggtitle('2015년') 
-		g2.6 <- ggtitle('2016년') 
+	s <- scale_fill_distiller(name="CO\n단위(ppm)", palette="YlGnBu", breaks = pretty_breaks(n=5),direction = 1) 
+	g <- guides(fill = guide_legend(reverse = T))
 
-		t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
-		t2 <- theme(panel.spacing=unit(1,"lines"))
-		g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
+	g2.0 <- ggtitle('일산화탄소 2010년') 
+	g2.1 <- ggtitle('2011년') 
+	g2.2 <- ggtitle('2012년') 
+	g2.3 <- ggtitle('2013년') 
+	g2.4 <- ggtitle('2014년') 
+	g2.5 <- ggtitle('2015년') 
+	g2.6 <- ggtitle('2016년') 
 
-		 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
-		 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
-		 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
-		 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
-		 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
-		 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
-		 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
-	  }
+	t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
+	t2 <- theme(panel.spacing=unit(1,"lines"))
+	g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
+
+	 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
+	 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
+	 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
+	 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
+	 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
+	 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
+	 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
+  }
+
+ else if (pollution1 == "아황산가스") {
+	sulfurous_acid_gas <- "아황산가스"
+	sulfurous_acid_gas0 <- pol10_seoul$sulfurous_acid_gas
+	sulfurous_acid_gas1 <- pol11_seoul$sulfurous_acid_gas
+	sulfurous_acid_gas2 <- pol12_seoul$sulfurous_acid_gas
+	sulfurous_acid_gas3 <- pol13_seoul$sulfurous_acid_gas
+	sulfurous_acid_gas4 <- pol14_seoul$sulfurous_acid_gas
+	sulfurous_acid_gas5 <- pol15_seoul$sulfurous_acid_gas
+	sulfurous_acid_gas6 <- pol16_seoul$sulfurous_acid_gas
+
+
+	p10<- ggplot() + geom_polygon(data=pol10_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas0))+theme_void()
+	p11<- ggplot() + geom_polygon(data=pol11_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas1))+theme_void()
+	p12<- ggplot() + geom_polygon(data=pol12_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas2))+theme_void()
+	p13<- ggplot() + geom_polygon(data=pol13_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas3))+theme_void()
+	p14<- ggplot() + geom_polygon(data=pol14_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas4))+theme_void()
+	p15<- ggplot() + geom_polygon(data=pol15_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas5))+theme_void()
+	p16<- ggplot() + geom_polygon(data=pol16_seoul, aes(x=long, y=lat, group=group, fill=sulfurous_acid_gas6))+theme_void()
+
+	s <- scale_fill_distiller(name="SO2\n단위(ppm)", palette="YlOrBr", breaks = pretty_breaks(n=5),direction = 1) 
+	g <- guides(fill = guide_legend(reverse = T))
+
+	g2.0 <- ggtitle('아황산가스 2010년') 
+	g2.1 <- ggtitle('2011년') 
+	g2.2 <- ggtitle('2012년') 
+	g2.3 <- ggtitle('2013년') 
+	g2.4 <- ggtitle('2014년') 
+	g2.5 <- ggtitle('2015년') 
+	g2.6 <- ggtitle('2016년') 
+
+	t <- theme(plot.title = element_text(family = "NanumGothic", hjust = 0.5, size = 20), legend.title = element_text(family = "NanumGothic", face = "bold", size = 8))
+	t2 <- theme(panel.spacing=unit(1,"lines"))
+	g3 <- geom_text(data=cnames,aes(long, lat, label=지역.x), size=3, fontface="bold")
+
+	 pollution_map10 <- p10 + s + g + coord_map() + g2.0 + t + t2 + g3 
+	 pollution_map11 <- p11 + s + g + coord_map() + g2.1 + t + t2 + g3 
+	 pollution_map12 <- p12 + s + g + coord_map() + g2.2 + t + t2 + g3 
+	 pollution_map13 <- p13 + s + g + coord_map() + g2.3 + t + t2 + g3 
+	 pollution_map14 <- p14 + s + g + coord_map() + g2.4 + t + t2 + g3 
+	 pollution_map15 <- p15 + s + g + coord_map() + g2.5 + t + t2 + g3 
+	 pollution_map16 <- p16 + s + g + coord_map() + g2.6 + t + t2 + g3 
+  }
 
 
 
